@@ -1,0 +1,22 @@
+{
+  "name": "fcmp5",
+  "version": "1.0.0",
+  "description": "Introduction to Node.js and Express.js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lmhs/FCMP5.git"
+  },
+  "author": "Maksim Labovich",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lmhs/FCMP5/issues"
+  },
+  "homepage": "https://github.com/lmhs/FCMP5#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
