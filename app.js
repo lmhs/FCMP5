@@ -29,13 +29,22 @@ function addPost(post) {
 }
 
 app.post('/blogs', (req, res) => {
-  console.log(`bodyTitle: ${req.body.title}`);
   const articles = addPost({
     id: data.articles.length,
     title: req.body.title,
     author: req.body.author,
     content: req.body.content
   });
+  const newData = {articles};
+  fs.writeFile('Articles.json', JSON.stringify(newData));
+});
+
+function removePost(id) {
+  return data.articles.filter((article) => article.id !== id);
+}
+
+app.delete('/blogs/:id', (req, res) => {
+  const articles = removePost(req.params.id);
   const newData = {articles};
   fs.writeFile('Articles.json', JSON.stringify(newData));
 });
