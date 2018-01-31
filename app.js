@@ -4,11 +4,15 @@ const data = require('./Articles.json');
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const handlebars = require('express-handlebars');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
 app.get('/', (req, res) => res.send('welcome to my blog'));
 
@@ -24,7 +28,11 @@ function getPost(id) {
 
 app.get('/blogs/:id', (req, res) => {
   const article = getPost(req.params.id);
-  res.send(`<article><h2>${article.title}</h2> <h3>${article.author}</h3> <p>${article.content}</p>`);
+  if (article) {
+    res.render('article', {title: article.title, author: article.author, content: article.content});
+  } else {
+    res.render('404');
+  }
 });
 
 function addPost(post) {
@@ -69,3 +77,7 @@ app.delete('/blogs/:id', (req, res) => {
   const newData = {articles};
   fs.writeFile('Articles.json', JSON.stringify(newData));
 });
+
+app.get('*', (req, res) => {
+  res.render('404');
+})
