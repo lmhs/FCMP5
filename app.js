@@ -22,8 +22,12 @@ app.get('/blogs', (req, res) => {
   res.send(JSON.stringify(data));
 });
 
+function getArticles() {
+  return data.articles;
+}
+
 function getPost(id) {
-  return data.articles.find((article) => article.id === +id)
+  return getArticles().find((article) => article.id === +id)
 }
 
 app.get('/blogs/:id', (req, res) => {
@@ -36,46 +40,52 @@ app.get('/blogs/:id', (req, res) => {
 });
 
 function addPost(post) {
-  return [...data.articles, post];
+  return [...getArticles(), post];
+}
+
+function saveData(data) {
+  fs.writeFile(__dirname + '/Articles.json', JSON.stringify(data));
 }
 
 app.post('/blogs', (req, res) => {
+  const oldData = getArticles();
   const articles = addPost({
-    id: data.articles[data.articles.length - 1].id + 1,
+    id: oldData[oldData.length - 1].id + 1,
     title: req.body.title,
     author: req.body.author,
     content: req.body.content
   });
   const newData = {articles};
-  fs.writeFile('Articles.json', JSON.stringify(newData));
+  saveData(newData);
 });
 
 app.put('/blogs/:id', (req, res) => {
   const id = req.params.id;
   const article = getPost(id);
+  const oldData = getArticles();
   // immutable article
   const newArticle = Object.assign({}, article, req.body);
-  const position = data.articles.findIndex((element) => element.id === +id);
+  const position = oldData.findIndex((element) => element.id === +id);
 
   // immutable array
   const articles = [
-    ...data.articles.slice(0, position),
+    ...oldData.slice(0, position),
     newArticle,
-    ...data.articles.slice(position + 1)
+    ...oldData.slice(position + 1)
   ];
   const newData = {articles};
-
-  fs.writeFile('Articles.json', JSON.stringify(newData));
+  saveData(newData);
 });
 
 function removePost(id) {
-  return data.articles.filter((article) => article.id !== +id);
+  return getArticles().filter((article) => article.id !== +id);
 }
 
 app.delete('/blogs/:id', (req, res) => {
   const articles = removePost(req.params.id);
   const newData = {articles};
-  fs.writeFile('Articles.json', JSON.stringify(newData));
+  saveData(newData);
+  res.render('message', {text: 'Success!'});
 });
 
 app.get('*', (req, res) => {
