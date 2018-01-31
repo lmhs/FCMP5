@@ -33,7 +33,7 @@ function addPost(post) {
 
 app.post('/blogs', (req, res) => {
   const articles = addPost({
-    id: data.articles.length,
+    id: data.articles[data.articles.length - 1].id + 1,
     title: req.body.title,
     author: req.body.author,
     content: req.body.content
@@ -47,12 +47,13 @@ app.put('/blogs/:id', (req, res) => {
   const article = getPost(id);
   // immutable article
   const newArticle = Object.assign({}, article, req.body);
+  const position = data.articles.findIndex((element) => element.id === +id);
 
   // immutable array
   const articles = [
-    ...data.articles.slice(0, id),
+    ...data.articles.slice(0, position),
     newArticle,
-    ...data.articles.slice(id + 1)
+    ...data.articles.slice(position + 1)
   ];
   const newData = {articles};
 
