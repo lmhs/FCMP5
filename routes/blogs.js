@@ -35,13 +35,13 @@ function checkAuth(req, res, next) {
     const token = req.get('Authorization').split(' ')[1];
     jwt.verify(token, config.secretString, function (err) {
       if (err) {
-        res.redirect('/login');
+        res.redirect('/login/');
       } else {
         next();
       }
     });
   } else {
-    res.redirect('/login');
+    res.redirect('/login/');
   }
 }
 
@@ -123,7 +123,6 @@ router.delete('/:id', (req, res, next) => {
   });
 });
 
-router.use(logger.logErrors);
 router.use(logger.errorHandler);
 
 module.exports = router;

@@ -34,7 +34,6 @@ function authenticate(req, res, next) {
   });
 }
 
-router.use(logger.logErrors);
 router.use(logger.errorHandler);
 
 module.exports = router;
