@@ -6,6 +6,7 @@ const fs = require('fs');
 const handlebars = require('express-handlebars');
 const logger = require('./logger');
 const methodOverride = require('method-override');
+const User = require('./models/User.js');
 const blogs = require('./routes/blogs');
 const login = require('./routes/login');
 const app = express();

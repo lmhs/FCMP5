@@ -1,1 +1,4 @@
-{"port": 8080}
+{
+  "port": 8080,
+  "secretString": "$3k2337"
+}

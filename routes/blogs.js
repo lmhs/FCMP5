@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const jwt = require('jsonwebtoken');
+const config = require('../utils/config.json');
+
+const logger = require('../logger');
 
 mongoose.connect('mongodb://localhost:27017/frontcamp');
 
@@ -14,35 +18,31 @@ const articleSchema = new Schema({
   content: String
 });
 
-// key, objectid
-
 const Article = mongoose.model('Article', articleSchema);
 
 router.get('/', checkAuth, (req, res) => {
-  res.render('index');
+  const getArticles = getPosts();
+  getArticles.then((articles) => {
+    res.render('articles', {articles});
+  });
 });
 
 function checkAuth(req, res, next) {
-  const token = req.get('Authorization');
-  next();
-}
-
-function logErrors (err, req, res, next) {
-  console.error(err.stack);
-  next(err);
-}
-
-function clientErrorHandler (err, req, res, next) {
-  if (req.xhr) {
-    res.status(500).send({ error: 'Something failed!' });
+  if (req.get('Authorization') &&
+    req.get('Authorization').split(' ').length > 0 &&
+    req.get('Authorization').split(' ')[0] === 'Bearer' &&
+    req.get('Authorization').split(' ')[1]) {
+    const token = req.get('Authorization').split(' ')[1];
+    jwt.verify(token, config.secretString, function (err) {
+      if (err) {
+        res.redirect('/login');
+      } else {
+        next();
+      }
+    });
   } else {
-    next(err);
+    res.redirect('/login');
   }
-}
-
-function errorHandler (err, req, res, next) {
-  res.status(500);
-  res.render('error', {error: err});
 }
 
 function getPosts() {
@@ -62,13 +62,6 @@ function updatePostById(id, newPost) {
 function removePostById(id) {
   return Article.findByIdAndRemove(id).exec();
 }
-
-router.get('/', (req, res) => {
-  const getArticles = getPosts();
-  getArticles.then((articles) => {
-    res.render('articles', {articles});
-  });
-});
 
 router.get('/:id', (req, res, next) => {
   const getArticles = getPostById(req.params.id);
@@ -130,8 +123,7 @@ router.delete('/:id', (req, res, next) => {
   });
 });
 
-router.use(logErrors);
-router.use(clientErrorHandler);
-router.use(errorHandler);
+router.use(logger.logErrors);
+router.use(logger.errorHandler);
 
 module.exports = router;
