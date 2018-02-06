@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 mongoose.connect('mongodb://localhost:27017/frontcamp');
 
@@ -12,9 +14,18 @@ const articleSchema = new Schema({
   content: String
 });
 
+// key, objectid
+
 const Article = mongoose.model('Article', articleSchema);
 
-router.get('/', (req, res) => res.render('index'));
+router.get('/', checkAuth, (req, res) => {
+  res.render('index');
+});
+
+function checkAuth(req, res, next) {
+  const token = req.get('Authorization');
+  next();
+}
 
 function logErrors (err, req, res, next) {
   console.error(err.stack);
