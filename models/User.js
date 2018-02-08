@@ -12,8 +12,7 @@ const UserSchema = new Schema({
 // passwordHashed: $2a$10$pkTkA7ZdaHJo4F4MO.BTSONeEdHOrmwgvyq3WumdEPdv4KiNeAZxa
 
 UserSchema.methods.comparePasswords = function (password) {
-  return bcrypt.compareSync(password, '$2a$10$pkTkA7ZdaHJo4F4MO.BTSONeEdHOrmwgvyq3WumdEPdv4KiNeAZxa');
-  // return bcrypt.compareSync(password, this.passwordHashed);
+  return bcrypt.compareSync(password, this.passwordHashed);
 };
 
 module.exports = mongoose.model('User', UserSchema);

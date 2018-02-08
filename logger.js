@@ -5,6 +5,11 @@ const winstonLogger = winston.createLogger({
   transports: [
     new winston.transports.Console(),
     new winston.transports.File({
+      filename: 'error.log',
+      level: 'error',
+      timestamp: true
+    }),
+    new winston.transports.File({
       filename: 'combined.log',
       timestamp: true
     })

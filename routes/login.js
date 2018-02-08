@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = mongoose.model('User');
-const config = require('../utils/config.json');
+const config = require('../config.json');
 const logger = require('../logger');
 
 router.get('/', (req, res) => {
@@ -20,7 +19,7 @@ function authenticate(req, res, next) {
     username: req.body.username
   }, (error, user) => {
     if (error) {
-      throw error;
+      next(error);
     } else if (!user) {
       next('User not found');
     } else {

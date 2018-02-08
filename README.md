@@ -10,6 +10,16 @@ npm install
 ```
 3. Install Postman (Fiddler or other tool to test your endpoints)
 [Postman website](https://www.getpostman.com/)
+4. Install and run mongoDB
+
+For macOS run in terminal:
+
+```
+export PATH=/Users/{username}/mongodb/bin:$PATH
+mongod
+```
+5. Create DB ```frontcamp``` if not created before
+6. Add table ```users```
 
 ## Project Run
 

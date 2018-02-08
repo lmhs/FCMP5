@@ -3,11 +3,10 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const jwt = require('jsonwebtoken');
-const config = require('../utils/config.json');
-
+const config = require('../config.json');
 const logger = require('../logger');
 
-mongoose.connect('mongodb://localhost:27017/frontcamp');
+mongoose.connect(`mongodb://${config.db.url}/${config.db.name}`);
 
 const articleSchema = new Schema({
   title: String,
@@ -26,11 +25,11 @@ router.get('/', checkAuth, (req, res) => {
 });
 
 function checkAuth(req, res, next) {
-  if (req.get('Authorization') &&
-    req.get('Authorization').split(' ').length > 0 &&
-    req.get('Authorization').split(' ')[0] === 'Bearer' &&
-    req.get('Authorization').split(' ')[1]) {
-    const token = req.get('Authorization').split(' ')[1];
+  const authHeaders = req.get('Authorization') ? req.get('Authorization').split(' ') : null;
+  if (authHeaders.length > 0 &&
+      authHeaders[0] === 'Bearer' &&
+      authHeaders[1]) {
+    const token = rauthHeaders[1];
     jwt.verify(token, config.secretString, function (err) {
       if (err) {
         res.redirect('/login/');
@@ -78,8 +77,8 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
   if (!req.body.title ||
     !req.body.author ||
-    !req.body.content) {
-    throw new Error('empty fields');
+    !req.body.content) {  
+      return next('empty fields');
   }
 
   const newArticle = new Article({
