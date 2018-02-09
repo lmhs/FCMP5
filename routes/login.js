@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const User = mongoose.model('User');
@@ -10,28 +11,11 @@ router.get('/', (req, res) => {
   res.render('login');
 });
 
-router.post('/', authenticate, (req, res) => {
-  res.redirect('blogs/');
+router.post('/',
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  (req, res) => {
+    res.redirect('/blogs/');
 });
-
-function authenticate(req, res, next) {
-  User.findOne({
-    username: req.body.username
-  }, (error, user) => {
-    if (error) {
-      next(error);
-    } else if (!user) {
-      next('User not found');
-    } else {
-      if (user.comparePasswords(req.body.password)) {
-        const json = res.json({token: jwt.sign({id: user._id}, config.secretString)});
-        return json;
-      } else {
-        next('Wrong password');
-      }
-    }
-  });
-}
 
 router.use(logger.errorHandler);
 

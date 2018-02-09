@@ -26,10 +26,11 @@ router.get('/', checkAuth, (req, res) => {
 
 function checkAuth(req, res, next) {
   const authHeaders = req.get('Authorization') ? req.get('Authorization').split(' ') : null;
-  if (authHeaders.length > 0 &&
+  if (authHeaders &&
+      authHeaders.length > 0 &&
       authHeaders[0] === 'Bearer' &&
       authHeaders[1]) {
-    const token = rauthHeaders[1];
+    const token = authHeaders[1];
     jwt.verify(token, config.secretString, function (err) {
       if (err) {
         res.redirect('/login/');
