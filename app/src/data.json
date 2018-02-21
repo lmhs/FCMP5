@@ -1,0 +1,21 @@
+
+{"articles":[
+  {
+    "id":0,
+    "title":"Food Flier",
+    "author":"By Ben Taub",
+    "pubdate":"18.12.2017",
+    "content":"A few years ago, a Royal Air Force wing commander visited the British aeronautics engineer Nigel Gifford, to discuss the idea of dropping aid from the sky to besieged civilians in Syria. Airdrops are extremely rare in urban environments; beyond the political obstacles, there are the logistical difficulties of landing giant pallets in small areas of a city. Even successful drops can endanger civilians. “While unpacking one and a half metric tons of food, you make yourself a very nice sniper target,” Gifford, a seventy-one-year-old former soldier, told me. “So I said to the commander, ‘I wouldn’t do it like that. I would build the aircraft out of food.\nNow he has done so. The Pouncer, a hundred-and-forty-five-pound edible glider, with a ten-foot wingspan, is designed to be released from a cargo plane as far as sixty miles from its target. The fuselage is packed with grains; the Pouncer’s entire menu is customizable to cultural tastes and sensitivities. According to Gifford, in a complex humanitarian emergency—such as an earthquake in a mountainous area, with many villages but no usable roads—a plane could carry several hundred Pouncers, each programmed with different landing coördinates. The Pouncer has no engine, but its navigation system can adjust the wings to guide it to within twenty-three feet of its target.\nThe frame has some wooden components, but Gifford intends eventually to replace them with food. “Some parts can be made with a hard-baked, flour-based material that can be soaked in water and added to a meal,” he said. “My wife doesn’t like this, but I wander the supermarket aisles, playing with food, testing for tensile strength.” Dried, vacuum-packed meats show promise as landing gear."
+  }, {
+    "id":1,
+    "title":"Surgical Slime",
+    "author":"By Joshua Rothman",
+    "pubdate":"18.12.2017",
+    "content":"Arion fuscus is an orange-brown slug around the size of your pinkie. It moves too slowly to run from predators; instead, when threatened, it slimes itself, secreting a super-sticky glue that renders it immovable and unappetizing. To most of us, this is gross, but to researchers in biomimetics—the growing field at the intersection of biology and engineering—it’s a vision of the future.\nEarlier this year, a team of scientists working in the lab of David J. Mooney, at Harvard, analyzed the slime and repurposed it for clinical use inside the body, where it can function as a surgical adhesive. Unlike the surgical glue doctors use today, the team’s slug-inspired glue is nontoxic to cells and adheres to wet surfaces as well as dry ones. It could be used to close an internal incision, or to seal a hole in a heart.\nIn a sense, biomimetics is nothing new: in 1941, the Swiss engineer George de Mestral got the idea for Velcro by examining, under a microscope, a burr that had got caught in his dog’s fur. But, as our understanding of the natural world has deepened, the potential of biomimicry has expanded. Our own bodies are full of ingenious solutions created through evolution; so are the bodies of other living things. Increasingly, we are borrowing them."
+  }, {
+    "id":2,
+    "title":"A Scarf",
+    "author":"By Doreen St. Félix",
+    "content":"The promise of black visibility has always been twisted. Mechanisms of seeing are also mechanisms of intruding, policing, controlling. But Hyphen-Labs, a collective of women technologists of color, has developed an ingenious workaround—a scarf that occludes the wearer’s face, but only selectively. To the human eye, the scarf adorns; to a computer’s eye, it obscures, because of a camouflage pattern called HyperFace printed on the fabric. HyperFace, which was developed by the designer Adam Harvey, is a mess of pixelated blotches, out of which emerge twelve hundred shapes that are almost like faces, but not quite. This jumble of visual data overloads facial-recognition algorithms."
+  }
+]}
