@@ -6,31 +6,32 @@ const jwt = require('jsonwebtoken');
 const config = require('../config.json');
 const logger = require('../logger');
 
-router.get('/', checkAuth, (req, res) => {
+router.get('/posts', (req, res) => {
   const getArticles = getPosts();
+  
   getArticles.then((articles) => {
-    res.render('articles', {articles});
+    res.json({articles});
   });
 });
 
-function checkAuth(req, res, next) {
-  const authHeaders = req.get('Authorization') ? req.get('Authorization').split(' ') : null;
-  if (authHeaders &&
-      authHeaders.length > 0 &&
-      authHeaders[0] === 'Bearer' &&
-      authHeaders[1]) {
-    const token = authHeaders[1];
-    jwt.verify(token, config.secretString, function (err) {
-      if (err) {
-        res.redirect('/login/');
-      } else {
-        next();
-      }
-    });
-  } else {
-    res.redirect('/login/');
-  }
-}
+// function checkAuth(req, res, next) {
+//   const authHeaders = req.get('Authorization') ? req.get('Authorization').split(' ') : null;
+//   if (authHeaders &&
+//       authHeaders.length > 0 &&
+//       authHeaders[0] === 'Bearer' &&
+//       authHeaders[1]) {
+//     const token = authHeaders[1];
+//     jwt.verify(token, config.secretString, function (err) {
+//       if (err) {
+//         res.redirect('/login/');
+//       } else {
+//         next();
+//       }
+//     });
+//   } else {
+//     res.redirect('/login/');
+//   }
+// }
 
 function getPosts() {
   return Article.find({}, function(err, articles) {

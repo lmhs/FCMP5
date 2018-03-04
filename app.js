@@ -6,11 +6,16 @@ const logger = require('./logger');
 const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const mongoose = require('mongoose');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/User.js');
+const Article = require('./models/Article.js');
 const blogs = require('./routes/blogs');
 const login = require('./routes/login');
+const api = require('./routes/api');
 const app = express();
+
+mongoose.connect(`mongodb://${config.db.url}/${config.db.name}`);
 
 passport.serializeUser(function(user, cb) {
   cb(null, user.token);
@@ -42,6 +47,7 @@ app.use(morgan(':url :date[iso]', {stream: logger.winstonLogger.stream}));
 
 app.use('/blogs', blogs);
 app.use('/login', login);
+app.use('/api', api);
 
 app.engine('handlebars', handlebars({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
