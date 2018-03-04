@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config.json');
 const logger = require('../logger');
 
-router.get('/posts', (req, res) => {
+router.get('/posts', checkAuth, (req, res) => {
   const getArticles = getPosts();
   
   getArticles.then((articles) => {
@@ -14,24 +14,28 @@ router.get('/posts', (req, res) => {
   });
 });
 
-// function checkAuth(req, res, next) {
-//   const authHeaders = req.get('Authorization') ? req.get('Authorization').split(' ') : null;
-//   if (authHeaders &&
-//       authHeaders.length > 0 &&
-//       authHeaders[0] === 'Bearer' &&
-//       authHeaders[1]) {
-//     const token = authHeaders[1];
-//     jwt.verify(token, config.secretString, function (err) {
-//       if (err) {
-//         res.redirect('/login/');
-//       } else {
-//         next();
-//       }
-//     });
-//   } else {
-//     res.redirect('/login/');
-//   }
-// }
+function checkAuth(req, res, next) {
+  const authHeaders = req.get('Authorization') ? req.get('Authorization').split(' ') : null;
+  if (authHeaders &&
+      authHeaders.length > 0 &&
+      authHeaders[0] === 'Bearer' &&
+      authHeaders[1]) {
+    const token = authHeaders[1];
+    jwt.verify(token, config.secretString, function (err) {
+      if (err) {
+        res.status(400).json({
+          message: 'Error'
+      });
+      } else {
+        next();
+      }
+    });
+  } else {
+    res.status(400).json({
+      message: 'Error'
+  });
+  }
+}
 
 function getPosts() {
   return Article.find({}, function(err, articles) {
