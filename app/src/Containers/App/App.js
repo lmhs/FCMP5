@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
-import Post from './Post.js';
-
-const Posts = (articles) => {
-  return articles.map((article) => (
-    <Post key={article._id} author={article.author} title={article.title} content={article.content}/>
-  ))
-};
+import PostContainer from '../PostsContainer/PostsContainer';
+import Post from '../../Components/Post';
+import PostAdd from '../../Components/PostAdd';
 
 function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText);
   }
   return response;
+}
+
+function addPost(state, article) {
+  this.setState({articles: [article, ...state.articles]});
 }
 
 class App extends Component {
@@ -41,7 +41,10 @@ class App extends Component {
 
   render() {
     return (
-      <section>{Posts(this.state.articles)}</section>
+      <section>
+        <section>{PostAdd(this.state, addPost.bind(this))}</section>
+        <section>{PostContainer(this.state.articles)}</section>
+      </section>
     )
   }
 }
