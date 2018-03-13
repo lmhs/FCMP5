@@ -12,11 +12,36 @@ function handleErrors(response) {
 }
 
 function addPost(state, article) {
-  this.setState({articles: [article, ...state.articles]});
+  this.setState(Object.assign({}, state, {articles: [article, ...state.articles]}));
+}
+
+function getAuthors(articles) {
+  return articles.reduce((acc, article) => {
+    if (article.author) {
+      if (!acc.hasOwnProperty(article.author)) {
+        acc[article.author] = [article._id];
+      } else {
+        acc[article.author].push(article._id)
+      }
+    }
+    return acc
+  }, {});
+}
+
+function filterByAuthors(state, author) {
+  this.setState(Object.assign({}, state, {
+    articles: state.articles.map((article) => {
+      if (article.author === author || author === 'all') {
+        return Object.assign({}, article, {isVisible: true});
+      } else {
+        return Object.assign({}, article, {isVisible: false});
+      }
+    })
+  }));
 }
 
 class App extends Component {
-  state = {articles: []}
+  state = {articles: [], authors: {}};
 
   componentDidMount() {
     fetch('/api/posts', {
@@ -31,8 +56,9 @@ class App extends Component {
         return res.json()
       })
       .then(data => {
-        const articles = data.articles;
-        if (articles) this.setState({ articles });
+        const articles = data.articles.map((article) => Object.assign({}, article, {isVisible: true}));
+        const authors = getAuthors(articles);
+        if (articles) this.setState({ articles, authors });
       })
       .catch(function() {
         console.log('error');
@@ -43,7 +69,7 @@ class App extends Component {
     return (
       <section>
         <section>{PostAdd(this.state, addPost.bind(this))}</section>
-        <section>{PostContainer(this.state.articles)}</section>
+        <section>{PostContainer(this.state, filterByAuthors.bind(this))}</section>
       </section>
     )
   }

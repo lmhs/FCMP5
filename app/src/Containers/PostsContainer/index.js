@@ -2,12 +2,16 @@ import React from 'react';
 import Post from '../../Components/Post/';
 import Filter from '../../Components/Filter/';
 
-const PostsContainer = (articles) => {
+const PostsContainer = (state, filterByAuthors) => {
+  const articles = state.articles;
+
   return (
     <section className="articles">
-      {Filter(articles)}
+      {Filter(state, filterByAuthors)}
       {articles.map((article) => (
-        <Post key={article._id} author={article.author} title={article.title} content={article.content}/>
+        article.isVisible ? 
+          <Post key={article._id} author={article.author} title={article.title} content={article.content}/>
+          : ''
       ))}
     </section>
   )

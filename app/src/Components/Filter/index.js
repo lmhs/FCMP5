@@ -1,18 +1,21 @@
 import React from 'react';
 import './Filter.css';
 
-const Filter = (articles) => {
-  const authors = articles.reduce((acc, article) => {
-    acc[article._id] = article.author;
-    return acc
-  }, {});
+const Filter = (state, filter) => {
+  const articles = state.articles;
+  const authors = Object.assign({}, state.authors, {'all': articles.map((article) => article._id)});
   
   return (
     <div className="filter-items">
       {
         Object.keys(authors).map((key) => {
-          console.log(authors[key]);
-          {return <button className="filter-item" type="button" key="{key}">{authors[key]}</button>}
+          {
+            return <button className="filter-item" type="button" key={key} onClick={
+              () => {
+                filter(state, key)
+              }
+            }>{key}</button>
+          }
         })
       }
     </div>

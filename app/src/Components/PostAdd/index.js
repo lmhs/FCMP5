@@ -3,13 +3,14 @@ import './PostAdd.css'
 
 const PostAdd = (state, addPost) => {
   return (
-    <form>
-      <input type="text" name="title" placeholder="Title"/>
-      <input type="text" name="author" placeholder="Author"/>
-      <textarea name="content" placeholder="Content"/>
+    <form className="add-post-form">
+      <h3 className="add-post-form__title">Add Post</h3>
+      <input className="field-item" type="text" name="title" placeholder="Title"/>
+      <input className="field-item" type="text" name="author" placeholder="Author"/>
+      <textarea className="field-item" name="content" placeholder="Content"/>
       <button className="btn add-post-btn" type="button"
         onClick={() => {
-          addPost(state, {'title':'New title'})
+          addPost(state, {'title': 'New title', 'author': '', isVisible: true})
         }}>Submit</button>
     </form>
   )};
