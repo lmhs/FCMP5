@@ -3,7 +3,7 @@ import Post from '../../Components/Post/';
 import Filter from '../../Components/Filter/';
 
 const PostsContainer = (state, filterByAuthors) => {
-  const articles = state.articles;
+  const articles = [...state.articles];
 
   return (
     <section className="articles">

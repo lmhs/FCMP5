@@ -43,7 +43,7 @@ function filterByAuthors(state, author) {
 class App extends Component {
   state = {articles: [], authors: {}};
 
-  componentDidMount() {
+  componentWillMount() {
     fetch('/api/posts', {
       headers: {
         'accept': 'application/json',
@@ -68,7 +68,9 @@ class App extends Component {
   render() {
     return (
       <section>
-        <section>{PostAdd(this.state, addPost.bind(this))}</section>
+        <section>
+          <PostAdd mainState={this.state} addPost={addPost.bind(this)}/>
+        </section>
         <section>{PostContainer(this.state, filterByAuthors.bind(this))}</section>
       </section>
     )
