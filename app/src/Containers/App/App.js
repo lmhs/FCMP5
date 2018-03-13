@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import PostContainer from '../PostsContainer/PostsContainer';
-import Post from '../../Components/Post';
-import PostAdd from '../../Components/PostAdd';
+import PostContainer from '../PostsContainer/';
+import Post from '../../Components/Post/';
+import PostAdd from '../../Components/PostAdd/';
 
 function handleErrors(response) {
   if (!response.ok) {

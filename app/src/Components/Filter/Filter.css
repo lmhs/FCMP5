@@ -1,0 +1,31 @@
+.filter-items {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 10px 20px;
+  font-size: 15px;
+  color: rgba(0,0,0,.68);
+  background: rgba(0,0,0,.05);
+  border-radius: 3px;
+  border: none;
+  vertical-align: bottom;
+  text-decoration: none;
+}
+
+.filter-item:hover,
+.filter-item--is-selected {
+  background: rgba(0,0,0,.2);
+  color: rgba(0,0,0,.68);
+}
+
+@media screen and (min-width: 500px) {
+  .filter-item {
+    padding: 5px 10px;
+  }
+}
