@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import './App.css';
 import PostContainer from '../PostsContainer/';
-import Post from '../../Components/Post/';
-import PostAdd from '../../Components/PostAdd/';
+import Post from '../../components/Post/';
+import PostAdd from '../../components/PostAdd/';
+import { addPost } from '../../actions';
 
 function handleErrors(response) {
   if (!response.ok) {
@@ -11,9 +14,9 @@ function handleErrors(response) {
   return response;
 }
 
-function addPost(state, article) {
-  this.setState(Object.assign({}, state, {articles: [article, ...state.articles]}));
-}
+// function addPost(state, article) {
+//   this.setState(Object.assign({}, state, {articles: [article, ...state.articles]}));
+// }
 
 function getAuthors(articles) {
   return articles.reduce((acc, article) => {
@@ -39,6 +42,16 @@ function filterByAuthors(state, author) {
     })
   }));
 }
+
+const mapStateToProps = state => ({
+  articles: state
+});
+
+const mapDispatchToProps = dispatch => ({
+  addPost(article) {
+    dispatch(addPost(article.title, article.author, article.content));
+  }
+});
 
 class App extends Component {
   state = {articles: [], authors: {}};
@@ -69,12 +82,12 @@ class App extends Component {
     return (
       <section>
         <section>
-          <PostAdd mainState={this.state} addPost={addPost.bind(this)}/>
+          <PostAdd mainState={this.props.articles} addPost={this.props.addPost}/>
         </section>
-        <section>{PostContainer(this.state, filterByAuthors.bind(this))}</section>
+        <section>{PostContainer(this.props.articles, filterByAuthors.bind(this))}</section>
       </section>
     )
   }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

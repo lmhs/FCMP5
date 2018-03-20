@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
+import { ObjectID } from 'bson';
+
 import './PostAdd.css';
-import {ObjectID} from 'bson';
 
 class PostAdd extends Component {
   constructor(props) {
     super(props);
+
     this.state = {title: '', author: '', content: ''};
-    this.mainState = props.mainState;
-    this.addPost = props.addPost;
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -16,7 +16,7 @@ class PostAdd extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const id = new ObjectID();
-    this.addPost(this.props.mainState, {'title': this.state.title, 'author': this.state.author, '_id': id.toString(), isVisible: true, content: this.state.content});
+    this.props.addPost({'title': this.state.title, 'author': this.state.author, '_id': id.toString(), isVisible: true, content: this.state.content});
     this.setState({title: '', author: '', content: ''});
   }
   
@@ -25,7 +25,7 @@ class PostAdd extends Component {
   }
   
   render() {
-    return (<form className="add-post-form" onSubmit={this.handleSubmit.bind(this)}>
+    return (<form className="add-post-form" onSubmit={this.handleSubmit}>
       <h3 className="add-post-form__title">Add Post</h3>
       <input className="field-item" type="text" name="title" placeholder="Title" value={this.state.title} onChange={this.handleChange}/>
       <input className="field-item" type="text" name="author" placeholder="Author" value={this.state.author} onChange={this.handleChange}/>
