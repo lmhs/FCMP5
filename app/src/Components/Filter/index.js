@@ -12,9 +12,7 @@ const Filter = (state, filter) => {
         Object.keys(authors).map((key) => {
           {
             return <button className="filter-item" type="button" key={key} onClick={
-              () => {
-                filter(state, key)
-              }
+              () => filter(key)
             }>{key}</button>
           }
         })

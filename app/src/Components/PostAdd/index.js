@@ -16,7 +16,7 @@ class PostAdd extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const id = new ObjectID();
-    this.props.addPost({'title': this.state.title, 'author': this.state.author, '_id': id.toString(), isVisible: true, content: this.state.content});
+    this.props.addPost({'_id': id.toString(), 'title': this.state.title, 'author': this.state.author, content: this.state.content, isVisible: true});
     this.setState({title: '', author: '', content: ''});
   }
   

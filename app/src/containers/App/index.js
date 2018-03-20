@@ -5,7 +5,7 @@ import './App.css';
 import PostContainer from '../PostsContainer/';
 import Post from '../../components/Post/';
 import PostAdd from '../../components/PostAdd/';
-import { addPost } from '../../actions';
+import { addPost, filterPostsByAuthor } from '../../actions';
 
 function handleErrors(response) {
   if (!response.ok) {
@@ -13,10 +13,6 @@ function handleErrors(response) {
   }
   return response;
 }
-
-// function addPost(state, article) {
-//   this.setState(Object.assign({}, state, {articles: [article, ...state.articles]}));
-// }
 
 function getAuthors(articles) {
   return articles.reduce((acc, article) => {
@@ -31,25 +27,17 @@ function getAuthors(articles) {
   }, {});
 }
 
-function filterByAuthors(state, author) {
-  this.setState(Object.assign({}, state, {
-    articles: state.articles.map((article) => {
-      if (article.author === author || author === 'all') {
-        return Object.assign({}, article, {isVisible: true});
-      } else {
-        return Object.assign({}, article, {isVisible: false});
-      }
-    })
-  }));
-}
-
 const mapStateToProps = state => ({
-  articles: state
+  articles: state.articles,
+  authors: state.authors
 });
 
 const mapDispatchToProps = dispatch => ({
   addPost(article) {
-    dispatch(addPost(article.title, article.author, article.content));
+    dispatch(addPost(article));
+  },
+  filterPostsByAuthor(state, author) {
+    dispatch(filterPostsByAuthor(state, author));
   }
 });
 
@@ -84,7 +72,7 @@ class App extends Component {
         <section>
           <PostAdd mainState={this.props.articles} addPost={this.props.addPost}/>
         </section>
-        <section>{PostContainer(this.props.articles, filterByAuthors.bind(this))}</section>
+        <section>{PostContainer(this.props.articles, this.props.authors, this.props.filterPostsByAuthor)}</section>
       </section>
     )
   }

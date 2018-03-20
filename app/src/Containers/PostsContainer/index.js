@@ -5,17 +5,24 @@ import Filter from '../../components/Filter/';
 
 import './PostsContainer.css';
 
-const PostsContainer = (props, filterByAuthors) => {
-  const articles = [...props];
+const PostsContainer = (articlesProps, authorsProps, filterByAuthors) => {
+  const articles = [...articlesProps];
+  const authors = Object.assign({}, authorsProps);
+  const state = {
+    articles,
+    authors
+  };
 
   return (
-    <section className="articles">
-      {/* {Filter(props, filterByAuthors)} */}
-      {articles.map((article) => (
-        article.isVisible ? 
-          <Post key={article._id} author={article.author} title={article.title} content={article.content}/>
-          : ''
-      ))}
+    <section>
+      {Filter(state, filterByAuthors)}
+      <section className="articles">
+        {articles.map((article) => (
+          article.isVisible ? 
+            <Post key={article._id} author={article.author} title={article.title} content={article.content}/>
+            : ''
+        ))}
+      </section>
     </section>
   )
 };
