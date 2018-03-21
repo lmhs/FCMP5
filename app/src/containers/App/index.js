@@ -5,26 +5,17 @@ import './App.css';
 import PostContainer from '../PostsContainer/';
 import Post from '../../components/Post/';
 import PostAdd from '../../components/PostAdd/';
-import { addPost, filterPostsByAuthor } from '../../actions';
+import {
+  addPost,
+  filterPostsByAuthor,
+  fetchArticlesSuccess
+} from '../../actions';
 
 function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText);
   }
   return response;
-}
-
-function getAuthors(articles) {
-  return articles.reduce((acc, article) => {
-    if (article.author) {
-      if (!acc.hasOwnProperty(article.author)) {
-        acc[article.author] = [article._id];
-      } else {
-        acc[article.author].push(article._id)
-      }
-    }
-    return acc
-  }, {});
 }
 
 const mapStateToProps = state => ({
@@ -38,13 +29,16 @@ const mapDispatchToProps = dispatch => ({
   },
   filterPostsByAuthor(state, author) {
     dispatch(filterPostsByAuthor(state, author));
+  },
+  fetchArticlesSuccess(articles) {
+    dispatch(fetchArticlesSuccess(articles));
   }
 });
 
 class App extends Component {
   state = {articles: [], authors: {}};
 
-  componentWillMount() {
+  componentDidMount() {
     fetch('/api/posts', {
       headers: {
         'accept': 'application/json',
@@ -58,8 +52,12 @@ class App extends Component {
       })
       .then(data => {
         const articles = data.articles.map((article) => Object.assign({}, article, {isVisible: true}));
-        const authors = getAuthors(articles);
-        if (articles) this.setState({ articles, authors });
+        // const authors = getAuthors(articles);
+        if (articles) {
+          this.props.fetchArticlesSuccess(articles);
+        }
+        return data;
+        // if (articles) this.setState({ articles, authors });
       })
       .catch(function() {
         console.log('error');

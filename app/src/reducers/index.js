@@ -1,4 +1,10 @@
-import { ADD_POST, FILTER_POSTS_BY_AUTHOR } from '../actions';
+import {
+  ADD_POST,
+  FILTER_POSTS_BY_AUTHOR,
+  FETCH_ARTICLES_SUCCESS
+} from '../actions';
+
+import { getAuthors } from '../utils';
 
 export default (state = {articles: [], authors: {}}, action) => {
   switch (action.type) {
@@ -19,20 +25,12 @@ export default (state = {articles: [], authors: {}}, action) => {
           }
         })
       });
+    case FETCH_ARTICLES_SUCCESS:
+      return Object.assign({}, state, {
+        articles: action.payload.articles,
+        authors: getAuthors(action.payload.articles)
+      });
     default:
       return state;
   }
-}
-
-
-function filterByAuthors(state, author) {
-  this.setState(Object.assign({}, state, {
-    articles: state.articles.map((article) => {
-      if (article.author === author || author === 'all') {
-        return Object.assign({}, article, {isVisible: true});
-      } else {
-        return Object.assign({}, article, {isVisible: false});
-      }
-    })
-  }));
 }
