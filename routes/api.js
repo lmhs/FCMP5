@@ -6,10 +6,11 @@ const jwt = require('jsonwebtoken');
 const config = require('../config.json');
 const logger = require('../logger');
 
-router.get('/', checkAuth, (req, res) => {
+router.get('/posts', checkAuth, (req, res) => {
   const getArticles = getPosts();
+  
   getArticles.then((articles) => {
-    res.render('articles', {articles});
+    res.json({articles});
   });
 });
 
@@ -22,13 +23,17 @@ function checkAuth(req, res, next) {
     const token = authHeaders[1];
     jwt.verify(token, config.secretString, function (err) {
       if (err) {
-        res.redirect('/login/');
+        res.status(400).json({
+          message: 'Error'
+      });
       } else {
         next();
       }
     });
   } else {
-    res.redirect('/login/');
+    res.status(400).json({
+      message: 'Error'
+  });
   }
 }
 

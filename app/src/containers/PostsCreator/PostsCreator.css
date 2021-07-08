@@ -1,0 +1,87 @@
+html {
+  box-sizing: border-box;
+  height: 100%;
+  user-select: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 100%;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color .2s ease-out, background-color .2s ease-out;
+}
+
+a:hover {
+  transition: color 0s, background-color 0s;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+select {
+  width: 100%;
+  padding: 5px 10px;
+  height: 40px;
+  font-size: 15px;
+  color: rgba(0,0,0,.68);
+  background: rgba(0,0,0,.05);
+  border-radius: 2px;
+  border: none;
+}
+
+.section-block {
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.section-block.is-hidden {
+  display: none;
+}
+
+.section-block:not(:first-child) {
+  border-top: 1px solid rgba(0,0,0,.05);
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  color: rgba(0,0,0,.68);
+  background: rgba(0,0,0,.05);
+  border-radius: 3px;
+  border: none;
+}
+
+.btn:hover,
+.btn:active {
+  background: rgba(0,0,0,.2);
+  color: rgba(0,0,0,.68);
+}
+
+.show-articles-btn {
+  margin-left: 8px;
+}
+
+@media screen and (min-width: 500px) {
+  select {
+    max-width: 33%;
+    height: 30px;
+  }
+}

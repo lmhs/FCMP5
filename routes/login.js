@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/',
-  passport.authenticate('local', { failureRedirect: '/login' }),
+  // passport.authenticate('local', { failureRedirect: '/login' }),
   (req, res) => {
     res.redirect('/blogs/');
 });

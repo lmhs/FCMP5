@@ -1,0 +1,11 @@
+@media screen and (min-width: 500px) {
+  .articles {
+    column-count: 2;
+  }
+}
+
+@media screen and (min-width: 740px) {
+  .articles {
+    column-count: 3;
+  }
+}

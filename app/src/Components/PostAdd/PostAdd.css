@@ -1,0 +1,29 @@
+.add-post-form {
+  padding: 20px;
+  background: #fafafa;
+}
+
+.add-post-form__title {
+  text-align: center;
+}
+
+.add-post-btn {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #333;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.field-item {
+  width: 500px;
+  max-width: 100%;
+  display: block;
+  margin: 0 auto 20px;
+  padding: 10px 20px;
+  font-size: 15px;
+  color: rgba(0,0,0,.68);
+  background: rgba(0,0,0,.05);
+  border-radius: 3px;
+  border: none;
+}

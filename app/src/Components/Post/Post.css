@@ -1,0 +1,43 @@
+
+.article {
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,.1);
+  margin-bottom: 20px;
+  break-inside: avoid;
+}
+
+.article-link {
+  display: block;
+}
+
+.article-body {
+  padding: 10px 15px 5px;
+}
+
+.article-img {
+  display: block;
+  min-width: 100%;
+  height: 140px;
+  object-fit: cover;
+  background-color: #fafafa;
+}
+
+.article-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.article-title-link:hover {
+  color: #479FC4;
+}
+
+.article-author {
+  font-size: 11px;
+  color: #999;
+}
+
+.article-content {
+  font-size: 12px;
+}

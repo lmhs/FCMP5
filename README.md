@@ -23,9 +23,20 @@ mongod
 
 ## Project Run
 
+1. Run Server in separate terminal window or tab:
 ```
 nodemon app
 ```
+2. In separate terminal window or tab navigate to `app` folder and run
+```
+npm run start
+```
+This will run Client app
+3. In separate terminal window or tab navigate to `app` folder and run
+```
+npm run test
+```
+This will run tests
 
 ### Testing endpoints:
 
